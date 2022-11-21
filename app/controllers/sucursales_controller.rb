@@ -4,8 +4,6 @@ class SucursalesController < ApplicationController
 
   def index
     @sucursales = Sucursal.all
-    flash[:notice] = 'hola mundo'
-    flash[:alert] = 'alerta'
   end
 
   def show; end
@@ -18,19 +16,31 @@ class SucursalesController < ApplicationController
     @sucursal = Sucursal.new(sucursal_params)
 
     if @sucursal.save
-      redirect_to @sucursal, notice: 'Sucursal creada.'
+      redirect_to @sucursal, notice: "Sucursal '#{@sucursal.nombre}' creada."
     else
+      flash.now[:alert] = 'No se pudo crear la sucursal.'
       render :new
     end
   end
 
   def edit; end
 
-  def update; end
+  def update
+    if @sucursal.update(sucursal_params)
+      redirect_to @sucursal, notice: "Sucursal '#{@sucursal.nombre}' actualizada."
+    else
+      flash.now[:alert] = 'No se pudo actualizar la sucursal.'
+      render :edit
+    end
+  end
 
   def destroy
-    @sucursal.destroy
-    redirect_to sucursales_path
+    if @sucursal.destroy
+      redirect_to sucursales_path, notice: "Sucursal '#{@sucursal.nombre}' eliminada."
+    else
+      flash.now[:alert] = 'No se pudo eliminar la sucursal.'
+      render :index
+    end
   end
 
   private
