@@ -46,8 +46,8 @@ gem "bootsnap", require: false
 gem "sassc-rails"
 
 # Bootstrap [https://github.com/twbs/bootstrap-rubygem]
-gem 'bootstrap', '~> 5.2.2'
-gem 'jquery-rails'
+gem "bootstrap", "~> 5.2.2"
+gem "jquery-rails"
 
 # Use Simple Form to simplify forms [https://github.com/heartcombo/simple_form]
 gem 'simple_form'
@@ -57,6 +57,9 @@ gem "lograge"
 
 # Use Haml to simplify views [https://github.com/haml/haml-rails]
 gem "haml-rails", "~> 2.0"
+
+# Use Devise as an authentication solution [https://github.com/heartcombo/devise]
+gem "devise"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
