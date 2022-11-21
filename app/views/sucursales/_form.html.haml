@@ -1,0 +1,9 @@
+= simple_form_for(@sucursal) do |f|
+  .form-inputs
+    = f.input :nombre,    required: true, input_html: { autocomplete: "off" }, autofocus: true
+    = f.input :direccion, required: true, input_html: { autocomplete: "off" }
+    = f.input :telefono,  required: true, input_html: { autocomplete: "off" }
+
+  .form-actions.my-3
+    = f.button :submit, 'Crear sucursal', class: 'btn btn-primary'
+    = link_to('Cancelar', sucursales_path, class: 'btn btn-light')

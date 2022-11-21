@@ -1,0 +1,28 @@
+.row
+  .col-md-4
+    %h1 Sucursales bancarias
+
+  .col-md-2.offset-md-6
+    = link_to('Nueva sucursal', [:new, :sucursal], class: 'btn btn-success')
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th #
+      %th Nombre
+      %th Dirección
+      %th Teléfono
+      %th{colspan: 3}
+
+  %tbody
+    - for sucursal in @sucursales
+      %tr
+        %td= sucursal.id
+        %td= sucursal.nombre
+        %td= sucursal.direccion
+        %td= sucursal.telefono
+
+        / Acciones
+        %td= link_to('Ver',      sucursal,          class: 'btn btn-primary')
+        %td= link_to('Editar',   [:edit, sucursal], class: 'btn btn-primary')
+        %td= link_to('Eliminar', sucursal,          class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: "Estas seguro de querer borrar la sucursal #{sucursal.nombre}?" })

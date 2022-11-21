@@ -1,6 +1,6 @@
-class CrearSucursalesBancarias < ActiveRecord::Migration[7.0]
+class CrearSucursales < ActiveRecord::Migration[7.0]
   def change
-    create_table :sucursales_bancarias do |t|
+    create_table :sucursales do |t|
       t.string :nombre,    null: false, default: ""
       t.string :direccion, null: false, default: ""
       t.string :telefono,  null: false, default: ""
@@ -8,6 +8,6 @@ class CrearSucursalesBancarias < ActiveRecord::Migration[7.0]
       t.timestamps         null: false
     end
 
-    add_index :sucursales_bancarias, :nombre, unique: true
+    add_index :sucursales, :nombre, unique: true
   end
 end

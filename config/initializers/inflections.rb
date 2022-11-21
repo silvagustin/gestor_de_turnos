@@ -14,3 +14,9 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym "RESTful"
 # end
+
+# La convención de Rails no se lleva muy bien con el español y es por ello que
+# tengo que indicarle el singular/plural de una palabra.
+ActiveSupport::Inflector.inflections(:en) do |inflect|
+  inflect.irregular "sucursal", "sucursales"
+end
