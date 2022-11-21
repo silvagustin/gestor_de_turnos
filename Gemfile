@@ -49,8 +49,11 @@ gem "sassc-rails"
 gem 'bootstrap', '~> 5.2.2'
 gem 'jquery-rails'
 
-# Simple Form [https://github.com/heartcombo/simple_form]
+# Use Simple Form to simplify forms [https://github.com/heartcombo/simple_form]
 gem 'simple_form'
+
+# Use Lograge to simplify logs [https://github.com/roidrage/lograge]
+gem "lograge"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
