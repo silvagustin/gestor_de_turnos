@@ -19,7 +19,7 @@ class SucursalesController < ApplicationController
       redirect_to @sucursal, notice: "Sucursal '#{@sucursal.nombre}' creada."
     else
       flash.now[:alert] = 'No se pudo crear la sucursal.'
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -30,17 +30,19 @@ class SucursalesController < ApplicationController
       redirect_to @sucursal, notice: "Sucursal '#{@sucursal.nombre}' actualizada."
     else
       flash.now[:alert] = 'No se pudo actualizar la sucursal.'
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    if @sucursal.destroy
-      redirect_to sucursales_path, notice: "Sucursal '#{@sucursal.nombre}' eliminada."
-    else
-      flash.now[:alert] = 'No se pudo eliminar la sucursal.'
-      render :index
-    end
+    flash_message =
+      if @sucursal.destroy
+        { notice: "Sucursal '#{@sucursal.nombre}' eliminada." }
+      else
+        { alert: "No se pudo eliminar la sucursal '#{@sucursal.nombre}'. Asegurate que no tenga turnos pendientes" }
+      end
+
+    redirect_to sucursales_path, flash_message
   end
 
   private
