@@ -45,9 +45,12 @@ gem "bootsnap", require: false
 # Use Sass to process CSS
 gem "sassc-rails"
 
-# Bootstrap
+# Bootstrap [https://github.com/twbs/bootstrap-rubygem]
 gem 'bootstrap', '~> 5.2.2'
 gem 'jquery-rails'
+
+# Simple Form [https://github.com/heartcombo/simple_form]
+gem 'simple_form'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
