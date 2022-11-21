@@ -61,6 +61,9 @@ gem "haml-rails", "~> 2.0"
 # Use Devise as an authentication solution [https://github.com/heartcombo/devise]
 gem "devise"
 
+# Use Pundit as an authorization solution []
+gem "pundit"
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
