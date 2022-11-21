@@ -4,4 +4,6 @@ class User < ApplicationRecord
          :registerable,
          :rememberable,
          :validatable
+
+  enum :rol, { cliente: 0, personal_bancario: 1, administrador: 2 }, scopes: false
 end
