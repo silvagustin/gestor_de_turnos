@@ -8,5 +8,5 @@
         = link_to('Sucursales', sucursales_path, class: 'nav-link')
 
       - if user_signed_in?
-        = link_to('Mi perfil', '#', class: 'nav-link')
-        = link_to('Cerrar sesión', '#', class: 'nav-link')
+        = link_to('Mi perfil', edit_registration_path(current_user), class: 'nav-link')
+        = link_to('Cerrar sesión', '/logout', class: 'nav-link', data: { turbo_method: :delete, turbo_confirm: "Estas seguro de querer cerrar sesión?" })

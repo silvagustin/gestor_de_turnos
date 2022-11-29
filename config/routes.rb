@@ -10,8 +10,5 @@ Rails.application.routes.draw do
     },
     skip: [:passwords]
 
-  # Defines the root path route ("/")
-  # root "articles#index"
-
   resources :sucursales
 end
