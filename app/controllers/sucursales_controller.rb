@@ -3,6 +3,7 @@ class SucursalesController < ApplicationController
   before_action :set_sucursal, except: %i( index new create )
 
   def index
+    authorize(Sucursal, :index?)
     @sucursales = Sucursal.all
   end
 
