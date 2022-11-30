@@ -7,6 +7,10 @@
       %li.nav-item
         = link_to('Sucursales', sucursales_path, class: 'nav-link')
 
-      - if user_signed_in?
-        = link_to('Mi perfil', edit_registration_path(current_user), class: 'nav-link')
-        = link_to('Cerrar sesión', '/logout', class: 'nav-link', data: { turbo_method: :delete, turbo_confirm: "Estas seguro de querer cerrar sesión?" })
+    - if user_signed_in?
+      %ul.navbar-nav.ms-auto
+        %li.nav-item
+          = link_to(current_user.email, edit_user_path(current_user), class: 'nav-link')
+
+        %li.nav-item
+          = link_to('Cerrar sesión', '/logout', class: 'nav-link btn btn-outline-danger my-2 my-sm-0', data: { turbo_method: :delete, turbo_confirm: "Estas seguro de querer cerrar sesión?" })

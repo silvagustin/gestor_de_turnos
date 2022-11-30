@@ -1,0 +1,6 @@
+%h1 Mi perfil
+
+%h3 Email
+%p= current_user.email
+
+= link_to('Cambiar password', [:edit, current_user], class: 'btn btn-primary')

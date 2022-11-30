@@ -51,6 +51,7 @@ gem "jquery-rails"
 
 # Use Simple Form to simplify forms [https://github.com/heartcombo/simple_form]
 gem 'simple_form'
+gem 'enum_help'
 
 # Use Lograge to simplify logs [https://github.com/roidrage/lograge]
 gem "lograge"
