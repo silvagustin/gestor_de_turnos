@@ -13,6 +13,7 @@ RSpec.describe "Sucursales", type: :request do
       before { get(sucursales_url) }
 
       it 'should NOT render index page' do
+        expect(flash[:alert]).to eq('No tiene suficientes permisos para realizar esta operacion.')
         expect(response).to redirect_to(edit_user_url(@cliente_user))
       end
     end
@@ -21,6 +22,7 @@ RSpec.describe "Sucursales", type: :request do
       before { get(sucursal_url(sucursal)) }
 
       it 'should NOT render show page' do
+        expect(flash[:alert]).to eq('No tiene suficientes permisos para realizar esta operacion.')
         expect(response).to redirect_to(edit_user_url(@cliente_user))
       end
     end
@@ -29,6 +31,7 @@ RSpec.describe "Sucursales", type: :request do
       before { get(new_sucursal_url) }
 
       it 'should NOT render new page' do
+        expect(flash[:alert]).to eq('No tiene suficientes permisos para realizar esta operacion.')
         expect(response).to redirect_to(edit_user_url(@cliente_user))
       end
     end
@@ -37,6 +40,7 @@ RSpec.describe "Sucursales", type: :request do
       before { post(sucursales_url, params: { sucursal: create_attrs }) }
 
       it 'should NOT create a sucursal' do
+        expect(flash[:alert]).to eq('No tiene suficientes permisos para realizar esta operacion.')
         expect(response).to redirect_to(edit_user_url(@cliente_user))
       end
     end
@@ -45,6 +49,7 @@ RSpec.describe "Sucursales", type: :request do
       before { get(edit_sucursal_url(sucursal)) }
 
       it 'should NOT render edit page' do
+        expect(flash[:alert]).to eq('No tiene suficientes permisos para realizar esta operacion.')
         expect(response).to redirect_to(edit_user_url(@cliente_user))
       end
     end
@@ -53,6 +58,7 @@ RSpec.describe "Sucursales", type: :request do
       before { put(sucursal_url(sucursal), params: { sucursal: update_attrs }) }
 
       it 'should NOT update a sucursal' do
+        expect(flash[:alert]).to eq('No tiene suficientes permisos para realizar esta operacion.')
         expect(response).to redirect_to(edit_user_url(@cliente_user))
       end
     end
@@ -61,6 +67,7 @@ RSpec.describe "Sucursales", type: :request do
       before { delete(sucursal_url(sucursal)) }
 
       it 'should NOT destroy a sucursal' do
+        expect(flash[:alert]).to eq('No tiene suficientes permisos para realizar esta operacion.')
         expect(response).to redirect_to(edit_user_url(@cliente_user))
       end
     end
@@ -90,6 +97,7 @@ RSpec.describe "Sucursales", type: :request do
       before { get(new_sucursal_url) }
 
       it 'should NOT render new page' do
+        expect(flash[:alert]).to eq('No tiene suficientes permisos para realizar esta operacion.')
         expect(response).to redirect_to(edit_user_url(@personal_bancario_user))
       end
     end
@@ -98,6 +106,7 @@ RSpec.describe "Sucursales", type: :request do
       before { post(sucursales_url, params: { sucursal: create_attrs }) }
 
       it 'should NOT create a sucursal' do
+        expect(flash[:alert]).to eq('No tiene suficientes permisos para realizar esta operacion.')
         expect(response).to redirect_to(edit_user_url(@personal_bancario_user))
       end
     end
@@ -106,6 +115,7 @@ RSpec.describe "Sucursales", type: :request do
       before { get(edit_sucursal_url(sucursal)) }
 
       it 'should NOT render edit page' do
+        expect(flash[:alert]).to eq('No tiene suficientes permisos para realizar esta operacion.')
         expect(response).to redirect_to(edit_user_url(@personal_bancario_user))
       end
     end
@@ -114,6 +124,7 @@ RSpec.describe "Sucursales", type: :request do
       before { put(sucursal_url(sucursal), params: { sucursal: update_attrs }) }
 
       it 'should NOT update a sucursal' do
+        expect(flash[:alert]).to eq('No tiene suficientes permisos para realizar esta operacion.')
         expect(response).to redirect_to(edit_user_url(@personal_bancario_user))
       end
     end
@@ -122,6 +133,7 @@ RSpec.describe "Sucursales", type: :request do
       before { delete(sucursal_url(sucursal)) }
 
       it 'should NOT destroy a sucursal' do
+        expect(flash[:alert]).to eq('No tiene suficientes permisos para realizar esta operacion.')
         expect(response).to redirect_to(edit_user_url(@personal_bancario_user))
       end
     end

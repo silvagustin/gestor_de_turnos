@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   private
 
   def user_not_authorized
-    flash[:alert] = "You are not authorized to perform this action."
+    flash[:alert] = 'No tiene suficientes permisos para realizar esta operacion.'
     redirect_back(fallback_location: edit_user_path(current_user))
   end
 end
