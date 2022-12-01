@@ -1,7 +1,6 @@
 class SucursalesController < ApplicationController
-  before_action :authenticate_user!,
-                :user_authorized?
-
+  before_action :authenticate_user!
+  before_action -> { authorize_user!(Sucursal) }
   before_action :set_sucursal, except: %i( index new create )
 
   def index
@@ -57,8 +56,7 @@ class SucursalesController < ApplicationController
     @sucursal = Sucursal.find(params[:id])
   end
 
-  def user_authorized?
-    action = "#{action_name}?".to_sym
-    authorize(Sucursal, action)
+  def authorized?
+    super(Sucursal)
   end
 end
