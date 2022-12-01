@@ -80,6 +80,9 @@ group :development, :test do
 
   # Use RSpec framework for testing [https://github.com/rspec/rspec-rails]
   gem 'rspec-rails', '~> 6.0.0'
+
+  # Use Pry to debug [https://github.com/pry/pry-rails]
+  gem 'pry-rails'
 end
 
 group :development do
