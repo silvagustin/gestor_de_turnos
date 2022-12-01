@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
+  before_action -> { authorize_user!(User) }
   before_action :set_user
 
   def edit; end
