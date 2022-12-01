@@ -2,7 +2,9 @@ require 'rails_helper'
 require 'support/session'
 
 RSpec.describe "Sucursales", type: :request do
-  let(:sucursal) { create(:sucursal) }
+  let(:sucursal)     { create(:sucursal) }
+  let(:create_attrs) { attributes_for(:sucursal) }
+  let(:update_attrs) { attributes_for(:sucursal) }
 
   context 'as a user with CLIENTE rol' do
     include_context :login_cliente_user
@@ -31,8 +33,8 @@ RSpec.describe "Sucursales", type: :request do
       end
     end
 
-    describe 'GET /create' do
-      before { post(sucursales_url, params: { sucursal: attributes_for(:sucursal) }) }
+    describe 'POST /create' do
+      before { post(sucursales_url, params: { sucursal: create_attrs }) }
 
       it 'should NOT create a sucursal' do
         expect(response).to redirect_to(edit_user_url(@cliente_user))
@@ -47,15 +49,15 @@ RSpec.describe "Sucursales", type: :request do
       end
     end
 
-    describe 'GET /update' do
-      before { put(sucursal_url(sucursal), params: { sucursal: attributes_for(:sucursal) }) }
+    describe 'PUT /update' do
+      before { put(sucursal_url(sucursal), params: { sucursal: update_attrs }) }
 
       it 'should NOT update a sucursal' do
         expect(response).to redirect_to(edit_user_url(@cliente_user))
       end
     end
 
-    describe 'GET /destroy' do
+    describe 'DELETE /destroy' do
       before { delete(sucursal_url(sucursal)) }
 
       it 'should NOT destroy a sucursal' do
@@ -87,15 +89,15 @@ RSpec.describe "Sucursales", type: :request do
     describe 'GET /new' do
       before { get(new_sucursal_url) }
 
-      it 'should not render new page' do
+      it 'should NOT render new page' do
         expect(response).to redirect_to(edit_user_url(@personal_bancario_user))
       end
     end
 
-    describe 'GET /create' do
-      before { post(sucursales_url, params: { sucursal: attributes_for(:sucursal) }) }
+    describe 'POST /create' do
+      before { post(sucursales_url, params: { sucursal: create_attrs }) }
 
-      it 'should not create a sucursal' do
+      it 'should NOT create a sucursal' do
         expect(response).to redirect_to(edit_user_url(@personal_bancario_user))
       end
     end
@@ -103,24 +105,88 @@ RSpec.describe "Sucursales", type: :request do
     describe 'GET /edit' do
       before { get(edit_sucursal_url(sucursal)) }
 
-      it 'should not render edit page' do
+      it 'should NOT render edit page' do
         expect(response).to redirect_to(edit_user_url(@personal_bancario_user))
       end
     end
 
-    describe 'GET /update' do
-      before { put(sucursal_url(sucursal), params: { sucursal: attributes_for(:sucursal) }) }
+    describe 'PUT /update' do
+      before { put(sucursal_url(sucursal), params: { sucursal: update_attrs }) }
 
-      it 'should not update a sucursal' do
+      it 'should NOT update a sucursal' do
         expect(response).to redirect_to(edit_user_url(@personal_bancario_user))
       end
     end
 
-    describe 'GET /destroy' do
+    describe 'DELETE /destroy' do
       before { delete(sucursal_url(sucursal)) }
 
-      it 'should not destroy a sucursal' do
+      it 'should NOT destroy a sucursal' do
         expect(response).to redirect_to(edit_user_url(@personal_bancario_user))
+      end
+    end
+
+  end
+
+  context 'as a user with ADMINISTRADOR rol' do
+    include_context :login_administrador_user
+
+    describe 'GET /index' do
+      before { get(sucursales_url) }
+
+      it 'should render index page' do
+        expect(response).to be_successful
+      end
+    end
+
+    describe 'GET /show' do
+      before { get(sucursal_url(sucursal)) }
+
+      it 'should render show page' do
+        expect(response).to be_successful
+      end
+    end
+
+    describe 'GET /new' do
+      before { get(new_sucursal_url) }
+
+      it 'should render new page' do
+        expect(response).to be_successful
+      end
+    end
+
+    describe 'POST /create' do
+      before { post(sucursales_url, params: { sucursal: create_attrs }) }
+
+      it 'should create a sucursal' do
+        expect(flash[:notice]).to eq('Sucursal creada.')
+        expect(response).to redirect_to(response.redirect_url)
+      end
+    end
+
+    describe 'GET /edit' do
+      before { get(edit_sucursal_url(sucursal)) }
+
+      it 'should render edit page' do
+        expect(response).to be_successful
+      end
+    end
+
+    describe 'PUT /update' do
+      before { put(sucursal_url(sucursal), params: { sucursal: update_attrs }) }
+
+      it 'should update a sucursal' do
+        expect(flash[:notice]).to eq('Sucursal actualizada.')
+        expect(response).to redirect_to(response.redirect_url)
+      end
+    end
+
+    describe 'DELETE /destroy' do
+      before { delete(sucursal_url(sucursal)) }
+
+      it 'should destroy a sucursal' do
+        expect(flash[:notice]).to eq('Sucursal eliminada.')
+        expect(response).to redirect_to(response.redirect_url)
       end
     end
 
