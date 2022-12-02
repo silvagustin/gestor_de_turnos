@@ -3,9 +3,9 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  def authorize_user!(model)
+  def authorize_user!(model_or_record)
     action = "#{action_name}?".to_sym
-    authorize(model, action)
+    authorize(model_or_record, action)
   end
 
   private

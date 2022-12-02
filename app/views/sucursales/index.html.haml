@@ -30,4 +30,4 @@
           %td= link_to('Editar', [:edit, sucursal], class: 'btn btn-primary')
 
         - if policy(:sucursal).destroy?
-          %td= link_to('Eliminar', sucursal, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: "Estas seguro de querer borrar la sucursal #{sucursal.nombre}?" })
+          %td= link_to('Eliminar', sucursal, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: "Estas seguro de querer eliminar la sucursal '#{sucursal.nombre}'?" })

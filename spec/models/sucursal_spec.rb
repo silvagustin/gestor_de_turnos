@@ -1,5 +1,14 @@
 require 'rails_helper'
 
+# TODOs:
+# - [] Luego de revisar users_spec.rb, revisar estos:
+  # - [] non-logged user
+  # - [] cliente user
+  # - [] personal_bancario user
+  # - [] administrador user
+
+  # PD: user_specs estan mas completos
+
 RSpec.describe Sucursal, type: :model do
   context 'validations' do
     describe 'nombre uniqueness' do

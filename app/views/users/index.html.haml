@@ -1,0 +1,33 @@
+.row
+  .col-md-4
+    %h1 Usuarios
+
+  .col-md-2.offset-md-6
+    - if policy(:user).new?
+      = link_to('Nuevo usuario', [:new, :user], class: 'btn btn-success')
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th #
+      %th Email
+      %th Rol
+      %th Fecha de registro
+      %th{colspan: 3}
+
+  %tbody
+    - for user in @users
+      %tr
+        %td= user.id
+        %td= user.email
+        %td= user.rol
+        %td= fecha_y_hora(user.created_at)
+
+        / Acciones
+        %td= link_to('Ver', user, class: 'btn btn-primary')
+
+        - if policy(user).edit?
+          %td= link_to('Editar', [:edit, user], class: 'btn btn-primary')
+
+        - if policy(user).destroy?
+          %td= link_to('Eliminar', user, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: "Estas seguro de querer eliminar al usuario '#{user.email}'?" })

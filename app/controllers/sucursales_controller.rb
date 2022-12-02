@@ -14,10 +14,8 @@ class SucursalesController < ApplicationController
   end
 
   def create
-    @sucursal = Sucursal.new(sucursal_params)
-
-    if @sucursal.save
-      redirect_to @sucursal, notice: "Sucursal creada."
+    if @sucursal = Sucursal.create(sucursal_params)
+      redirect_to @sucursal, notice: 'Sucursal creada.'
     else
       flash.now[:alert] = 'No se pudo crear la sucursal.'
       render :new, status: :unprocessable_entity
@@ -36,14 +34,11 @@ class SucursalesController < ApplicationController
   end
 
   def destroy
-    flash_message =
-      if @sucursal.destroy
-        { notice: "Sucursal eliminada." }
-      else
-        { alert: "No se pudo eliminar la sucursal. Asegurate que no tenga turnos pendientes" }
-      end
-
-    redirect_to sucursales_path, flash_message
+    if @sucursal.destroy
+      redirect_to sucursales_path, notice: 'Sucursal eliminada.'
+    else
+      redirect_to sucursales_path, alert: 'No se pudo eliminar la sucursal.'
+    end
   end
 
   private

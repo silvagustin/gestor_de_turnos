@@ -5,7 +5,12 @@
   #navbarNavDropdown.collapse.navbar-collapse
     %ul.navbar-nav
       %li.nav-item
-        = link_to('Sucursales', sucursales_path, class: 'nav-link')
+        - if policy(:sucursal).index?
+          = link_to('Sucursales', sucursales_path, class: 'nav-link')
+
+      %li.nav-item
+        - if policy(:user).index?
+          = link_to('Usuarios', users_path, class: 'nav-link')
 
     - if user_signed_in?
       %ul.navbar-nav.ms-auto

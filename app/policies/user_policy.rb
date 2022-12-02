@@ -1,10 +1,23 @@
 class UserPolicy < ApplicationPolicy
+  class Scope < Scope
+    def resolve
+      case @user.rol
+        when 'administrador'     then User.all
+        when 'personal_bancario' then User.clientes
+        else                          User.none
+      end
+    end
+  end
+
   def index?
-    @user.administrador?
+    @user.administrador? || @user.personal_bancario?
   end
 
   def show?
-    @user.administrador? || @user.id == current_user.id
+    return true if @user.administrador?
+    return true if @user.personal_bancario? && @record.cliente?
+    return true if @user.id == @record.id
+    false
   end
 
   def new?
@@ -16,11 +29,13 @@ class UserPolicy < ApplicationPolicy
   end
 
   def edit?
-    @user.administrador? || @user.id == current_user.id
+    return true if @user.administrador?
+    return true if @user.id == @record.id
+    false
   end
 
   def update?
-    @user.administrador? || @user.id == current_user.id
+    @user.administrador? || @user.id == @record.id
   end
 
   def destroy?

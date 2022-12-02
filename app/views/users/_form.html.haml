@@ -1,7 +1,7 @@
 =  simple_form_for(@user) do |f|
   .form-inputs
-    = f.input :email, disabled: true
-    = f.input :rol, disabled: true
+    = f.input :email, disabled: (!current_user.administrador?)
+    = f.input :rol, disabled: (!current_user.administrador?)
 
     = f.input :password, input_html: { autocomplete: "new-password" }, hint: "Dejar en blanco si no se quiere cambiarlo"
     = f.input :password_confirmation, input_html: { autocomplete: "new-password" }

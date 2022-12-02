@@ -10,7 +10,6 @@ Rails.application.routes.draw do
     },
     skip: [:passwords]
 
-  resources :users, only: %i( show edit update )
-
+  resources :users
   resources :sucursales
 end
