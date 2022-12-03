@@ -46,7 +46,11 @@ class UsersController < ApplicationController
 
   def user_params
     if current_user.administrador?
-      params.require(:user).permit(:email, :rol, :password, :password_confirmation)
+      if params[:user][:password].present? || params[:user][:password_confirmation].present?
+        params.require(:user).permit(:email, :rol, :password, :password_confirmation)
+      else
+        params.require(:user).permit(:email, :rol)
+      end
     else
       params.require(:user).permit(:password, :password_confirmation)
     end

@@ -428,6 +428,15 @@ RSpec.describe 'Users', type: :request do
       end
     end
 
+    describe 'PUT /update with all valid attributes' do
+      before { put(user_url(@administrador_user), params: { user: attributes_for(:user) }) }
+
+      it 'should update a user' do
+        expect(flash[:notice]).to eq('Usuario actualizado.')
+        expect(response).to redirect_to(edit_user_url(@administrador_user))
+      end
+    end
+
     describe 'PUT /update with valid attributes' do
       before { put(user_url(@administrador_user), params: { user: valid_update_attrs }) }
 
@@ -444,6 +453,15 @@ RSpec.describe 'Users', type: :request do
         expect(flash[:alert]).to eq('No se pudo actualizar el usuario.')
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.redirect_url).to eq(nil)
+      end
+    end
+
+    describe 'PUT /update with all valid attributes to another user with CLIENTE role' do
+      before { put(user_url(cliente_user), params: { user: attributes_for(:user) }) }
+
+      it 'should update a user' do
+        expect(flash[:notice]).to eq('Usuario actualizado.')
+        expect(response).to redirect_to(edit_user_url(@administrador_user))
       end
     end
 
@@ -466,6 +484,15 @@ RSpec.describe 'Users', type: :request do
       end
     end
 
+    describe 'PUT /update with all valid attributes to another user with PERSONAL_BANCARIO role' do
+      before { put(user_url(personal_bancario_user), params: { user: attributes_for(:user) }) }
+
+      it 'should update a user' do
+        expect(flash[:notice]).to eq('Usuario actualizado.')
+        expect(response).to redirect_to(edit_user_url(@administrador_user))
+      end
+    end
+
     describe 'PUT /update with valid attributes to another user with PERSONAL_BANCARIO role' do
       before { put(user_url(personal_bancario_user), params: { user: valid_update_attrs }) }
 
@@ -482,6 +509,15 @@ RSpec.describe 'Users', type: :request do
         expect(flash[:alert]).to eq('No se pudo actualizar el usuario.')
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.redirect_url).to eq(nil)
+      end
+    end
+
+    describe 'PUT /update with all valid attributes to another user with ADMINISTRADOR role' do
+      before { put(user_url(administrador_user), params: { user: attributes_for(:user) }) }
+
+      it 'should update a user' do
+        expect(flash[:notice]).to eq('Usuario actualizado.')
+        expect(response).to redirect_to(edit_user_url(@administrador_user))
       end
     end
 
