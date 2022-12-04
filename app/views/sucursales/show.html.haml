@@ -27,5 +27,5 @@
         %td= horario.hora_inicial
         %td= horario.hora_final
 
-        -# if policy(:horario).edit?
-          %td=# link_to('Editar', [:edit, horario], class: 'btn btn-primary')
+        - if policy(horario).edit?
+          %td= link_to('Editar', [:edit, @sucursal, horario], class: 'btn btn-primary')

@@ -26,7 +26,7 @@ class SucursalesController < ApplicationController
 
   def update
     if @sucursal.update(sucursal_params)
-      redirect_to @sucursal, notice: "Sucursal actualizada."
+      redirect_to @sucursal, notice: 'Sucursal actualizada.'
     else
       flash.now[:alert] = 'No se pudo actualizar la sucursal.'
       render :edit, status: :unprocessable_entity

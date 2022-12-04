@@ -1,0 +1,10 @@
+= simple_form_for([@horario.sucursal, @horario]) do |f|
+  .form-inputs
+    = f.input :dia, disabled: true
+    = f.input :hora_inicial
+    = f.input :hora_final
+    = f.input :habilitado
+
+  .form-actions.my-3
+    = f.button :submit, 'Guardar', class: 'btn btn-primary'
+    = link_to('Cancelar', sucursal_path(@horario.sucursal), class: 'btn btn-light')
