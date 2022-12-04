@@ -19,7 +19,10 @@ def crear_usuarios
 end
 
 def crear_sucursales
-  10.times { FactoryBot.create(:sucursal) }
+  10.times do
+    sucursal = FactoryBot.create(:sucursal)
+    Horario.crear_horarios(sucursal_id: sucursal.id)
+  end
 end
 
 ###############################################################################

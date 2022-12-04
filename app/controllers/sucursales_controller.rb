@@ -15,6 +15,7 @@ class SucursalesController < ApplicationController
 
   def create
     if @sucursal = Sucursal.create(sucursal_params)
+      Horario.crear_horarios(sucursal_id: @sucursal.id)
       redirect_to @sucursal, notice: 'Sucursal creada.'
     else
       flash.now[:alert] = 'No se pudo crear la sucursal.'
