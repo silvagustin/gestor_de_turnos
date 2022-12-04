@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_21_145110) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_04_131645) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "horarios", force: :cascade do |t|
+    t.bigint "sucursal_id", null: false
+    t.integer "dia", default: 0, null: false
+    t.integer "hora_inicial", default: 9, null: false
+    t.integer "hora_final", default: 15, null: false
+    t.boolean "habilitado", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sucursal_id"], name: "index_horarios_on_sucursal_id"
+  end
 
   create_table "sucursales", force: :cascade do |t|
     t.string "nombre", default: "", null: false

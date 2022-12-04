@@ -8,3 +8,24 @@
 
 %h3 Teléfono
 = @sucursal.telefono
+
+%h3 Horarios
+%table.table.table-striped
+  %thead
+    %tr
+      %th Habilitado?
+      %th Dia
+      %th Hora inicial
+      %th Hora final
+      %th
+
+  %tbody
+    - for horario in @sucursal.horarios
+      %tr
+        %td= horario.habilitado
+        %td= horario.dia
+        %td= horario.hora_inicial
+        %td= horario.hora_final
+
+        -# if policy(:horario).edit?
+          %td=# link_to('Editar', [:edit, horario], class: 'btn btn-primary')

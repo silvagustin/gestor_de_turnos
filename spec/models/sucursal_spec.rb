@@ -10,9 +10,10 @@ require 'rails_helper'
   # PD: user_specs estan mas completos
 
 RSpec.describe Sucursal, type: :model do
+  let!(:sucursal_1) { create(:sucursal) }
+
   context 'validations' do
     describe 'nombre uniqueness' do
-      let(:sucursal_1) { create(:sucursal) }
       let(:sucursal_2) { build(:sucursal) }
       let(:sucursal_3) { build(:sucursal, nombre: sucursal_1.nombre) }
 
@@ -72,6 +73,16 @@ RSpec.describe Sucursal, type: :model do
         sucursal.telefono = ''
         expect(sucursal).not_to be_valid
       end
+    end
+
+  end
+
+  context 'callbacks' do
+    describe '#after_create' do
+      it 'should have horarios' do
+        expect(sucursal_1.horarios).not_to be_empty
+      end
+
     end
 
   end
