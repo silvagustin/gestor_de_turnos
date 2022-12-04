@@ -14,7 +14,9 @@ class UsersController < ApplicationController
   end
 
   def create
-    if @user = User.create(user_params)
+    @user = User.new(user_params)
+
+    if @user.save
       redirect_to @user, notice: 'Usuario creado.'
     else
       flash.now[:alert] = 'No se pudo crear el usuario.'
@@ -26,8 +28,8 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      bypass_sign_in(@user)
-      redirect_to edit_user_path(current_user), notice: 'Usuario actualizado.'
+      bypass_sign_in(@user) if current_user.id == @user.id
+      redirect_to edit_user_path(@user), notice: 'Usuario actualizado.'
     else
       flash.now[:alert] = 'No se pudo actualizar el usuario.'
       render :edit, status: :unprocessable_entity
@@ -45,15 +47,24 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    if current_user.administrador?
-      if params[:user][:password].present? || params[:user][:password_confirmation].present?
-        params.require(:user).permit(:email, :rol, :password, :password_confirmation)
-      else
-        params.require(:user).permit(:email, :rol)
-      end
+    case [current_user.rol, action_name]
+    in ['administrador', 'create']
+      permitted_params([:email, :rol, :password, :password_confirmation])
+     in ['administrador', 'update'] if cambio_de_password?
+      permitted_params([:email, :rol, :password, :password_confirmation])
+    in ['administrador', 'update']
+      permitted_params([:email, :rol])
     else
-      params.require(:user).permit(:password, :password_confirmation)
+      permitted_params([:password, :password_confirmation])
     end
+  end
+
+  def permitted_params(fields)
+    params.require(:user).permit(*fields)
+  end
+
+  def cambio_de_password?
+    params[:user][:password].present? || params[:user][:password_confirmation].present?
   end
 
   def set_user

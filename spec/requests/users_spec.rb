@@ -330,6 +330,8 @@ RSpec.describe 'Users', type: :request do
   context 'as a user with ADMINISTRADOR role' do
     include_context :login_administrador_user
 
+    let(:invalid_create_attrs) { { email: Faker::Internet.email, rol: :cliente } }
+
     describe 'GET /index' do
       before { get(users_url) }
 
@@ -387,12 +389,21 @@ RSpec.describe 'Users', type: :request do
       end
     end
 
-    describe 'POST /create' do
+    describe 'POST /create with valid attributes' do
       before { post(users_url, params: { user: create_attrs }) }
 
       it 'should create a user' do
         expect(flash[:notice]).to eq('Usuario creado.')
         expect(response).to redirect_to(response.redirect_url)
+      end
+    end
+
+    describe 'POST /create with invalid attributes' do
+      before { post(users_url, params: { user: invalid_create_attrs }) }
+
+      it 'should NOT create a user' do
+        expect(flash[:alert]).to eq('No se pudo crear el usuario.')
+        expect(response.redirect_url).to eq(nil)
       end
     end
 
@@ -461,7 +472,7 @@ RSpec.describe 'Users', type: :request do
 
       it 'should update a user' do
         expect(flash[:notice]).to eq('Usuario actualizado.')
-        expect(response).to redirect_to(edit_user_url(@administrador_user))
+        expect(response).to redirect_to(edit_user_url(cliente_user))
       end
     end
 
@@ -470,7 +481,7 @@ RSpec.describe 'Users', type: :request do
 
       it 'should update a user' do
         expect(flash[:notice]).to eq('Usuario actualizado.')
-        expect(response).to redirect_to(edit_user_url(@administrador_user))
+        expect(response).to redirect_to(edit_user_url(cliente_user))
       end
     end
 
@@ -489,7 +500,7 @@ RSpec.describe 'Users', type: :request do
 
       it 'should update a user' do
         expect(flash[:notice]).to eq('Usuario actualizado.')
-        expect(response).to redirect_to(edit_user_url(@administrador_user))
+        expect(response).to redirect_to(edit_user_url(personal_bancario_user))
       end
     end
 
@@ -498,7 +509,7 @@ RSpec.describe 'Users', type: :request do
 
       it 'should update a user' do
         expect(flash[:notice]).to eq('Usuario actualizado.')
-        expect(response).to redirect_to(edit_user_url(@administrador_user))
+        expect(response).to redirect_to(edit_user_url(personal_bancario_user))
       end
     end
 
@@ -517,7 +528,7 @@ RSpec.describe 'Users', type: :request do
 
       it 'should update a user' do
         expect(flash[:notice]).to eq('Usuario actualizado.')
-        expect(response).to redirect_to(edit_user_url(@administrador_user))
+        expect(response).to redirect_to(edit_user_url(administrador_user))
       end
     end
 
@@ -526,7 +537,7 @@ RSpec.describe 'Users', type: :request do
 
       it 'should update a user' do
         expect(flash[:notice]).to eq('Usuario actualizado.')
-        expect(response).to redirect_to(edit_user_url(@administrador_user))
+        expect(response).to redirect_to(edit_user_url(administrador_user))
       end
     end
 
