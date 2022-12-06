@@ -49,11 +49,11 @@ class UsersController < ApplicationController
   def user_params
     case [current_user.rol, action_name]
     in ['administrador', 'create']
-      permitted_params([:email, :rol, :password, :password_confirmation])
+      permitted_params([:email, :rol, :sucursal_id, :password, :password_confirmation])
      in ['administrador', 'update'] if cambio_de_password?
-      permitted_params([:email, :rol, :password, :password_confirmation])
+      permitted_params([:email, :rol, :sucursal_id, :password, :password_confirmation])
     in ['administrador', 'update']
-      permitted_params([:email, :rol])
+      permitted_params([:email, :sucursal_id, :rol])
     else
       permitted_params([:password, :password_confirmation])
     end

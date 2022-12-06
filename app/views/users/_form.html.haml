@@ -3,6 +3,13 @@
     = f.input :email, disabled: (!current_user.administrador?)
     = f.input :rol, disabled: (!current_user.administrador?)
 
+    - case current_user.rol
+      - when 'administrador'
+        = f.association :sucursal, collection: opciones_sucursales()
+
+      - when 'personal_bancario'
+        = f.association :sucursal, collection: opciones_sucursales(), disabled: true
+
     = f.input :password, input_html: { autocomplete: "new-password" }, hint: "Dejar en blanco si no se quiere cambiarlo"
     = f.input :password_confirmation, input_html: { autocomplete: "new-password" }
 
