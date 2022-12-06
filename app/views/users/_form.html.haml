@@ -1,14 +1,15 @@
 =  simple_form_for(@user) do |f|
-  .form-inputs
-    = f.input :email, disabled: (!current_user.administrador?)
-    = f.input :rol, disabled: (!current_user.administrador?)
+  .form-inputs{ 'data-controller': 'users' }
+    = f.input :email, disabled: !current_user.administrador?
+    = f.input :rol, disabled: !current_user.administrador?, include_blank: false, input_html: { 'data-action': 'users#mostrarSucursales', 'data-users-target': 'rol' }
 
-    - case current_user.rol
-      - when 'administrador'
-        = f.association :sucursal, collection: opciones_sucursales()
+    %div{ 'data-users-target': 'sucursal', hidden: true }
+      - case current_user.rol
+        - when 'administrador'
+          = f.association :sucursal, collection: opciones_sucursales(), include_blank: false
 
-      - when 'personal_bancario'
-        = f.association :sucursal, collection: opciones_sucursales(), disabled: true
+        - when 'personal_bancario'
+          = f.association :sucursal, collection: opciones_sucursales(), disabled: true
 
     = f.input :password, input_html: { autocomplete: "new-password" }, hint: "Dejar en blanco si no se quiere cambiarlo"
     = f.input :password_confirmation, input_html: { autocomplete: "new-password" }

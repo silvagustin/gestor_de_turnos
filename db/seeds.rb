@@ -1,15 +1,31 @@
-require 'logger'
+###############################################################################
+# Metodos auxiliares
+###############################################################################
+def crear_sucursales_con_horarios
+  10.times do
+    sucursal = FactoryBot.create(:sucursal)
+    Horario.crear_horarios(sucursal_id: sucursal.id)
+  end
+end
 
 def crear_clientes
-  20.times { FactoryBot.create(:user) }
+  10.times do |i|
+    FactoryBot.create(:user, :cliente, email: "cliente_#{i}@email.com")
+  end
 end
 
 def crear_personal_bancario
-  5.times { FactoryBot.create(:user, :personal_bancario) }
+  5.times do |i|
+    personal_bancario_user = FactoryBot.build(:user, :personal_bancario, email: "personal_bancario_#{i}@email.com")
+    personal_bancario_user.sucursal = Sucursal.all.sample
+    personal_bancario_user.save
+  end
 end
 
 def crear_administradores
-  FactoryBot.create(:user, :administrador, email: 'administrador@email.com')
+  2.times do |i|
+    FactoryBot.create(:user, :administrador, email: "administrador_#{i}@email.com")
+  end
 end
 
 def crear_usuarios
@@ -18,26 +34,30 @@ def crear_usuarios
   crear_administradores
 end
 
-def crear_sucursales
-  10.times do
-    sucursal = FactoryBot.create(:sucursal)
-    Horario.crear_horarios(sucursal_id: sucursal.id)
-  end
-end
-
 ###############################################################################
 # Main
 ###############################################################################
+require 'logger'
+
 logger = Logger.new(STDOUT)
 
-logger.info("Eliminando todos los usuarios de la BD")
+logger.info('INICIO: limpieza de la DB')
+
 User.destroy_all
+logger.info('--> Usuarios eliminados')
 
-logger.info("Creando usuarios")
-crear_usuarios
+Horario.destroy_all
+logger.info('--> Horarios eliminadas')
 
-logger.info("Eliminando todas las sucursales de la BD")
 Sucursal.destroy_all
+logger.info('--> Sucursales eliminadas')
 
-logger.info("Creando sucursales")
-crear_sucursales
+
+
+logger.info('INICIO: carga de datos en la DB')
+
+crear_sucursales_con_horarios
+logger.info('--> Sucursales con horarios creadas')
+
+crear_usuarios
+logger.info('--> Usuarios creados')
