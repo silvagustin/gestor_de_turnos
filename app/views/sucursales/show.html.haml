@@ -22,7 +22,7 @@
   %tbody
     - for horario in @sucursal.horarios
       %tr
-        %td= horario.habilitado
+        %td= horario.habilitado ? 'Si' : 'No'
         %td= horario.dia
         %td= horario.hora_inicial
         %td= horario.hora_final
