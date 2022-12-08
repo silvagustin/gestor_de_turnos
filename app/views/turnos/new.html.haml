@@ -1,0 +1,35 @@
+%h1= "Solicitar turno para sucursal '#{@sucursal.nombre}'"
+
+%h3 Dirección
+= @sucursal.direccion
+
+%h3 Teléfono
+= @sucursal.telefono
+
+%h3 Horarios
+%table.table.table-striped
+  %thead
+    %tr
+      %th Habilitado?
+      %th Dia
+      %th Hora inicial
+      %th Hora final
+
+  %tbody
+    - for horario in @sucursal.horarios
+      %tr
+        %td= horario.habilitado ? 'Si' : 'No'
+        %td= horario.dia
+        %td= horario.hora_inicial
+        %td= horario.hora_final
+
+= simple_form_for(@turno, url: [@sucursal, @turno], method: :post) do |f|
+  .form-inputs
+    =# f.input :horario, html5: true, input_html: { min: "12:00:00", max: "15:00:00", step: "10800" }
+    = f.input :horario, html5: true
+
+    = f.input :motivo, required: true, input_html: { cols: 5, rows: 10 }
+
+  .form-actions.my-3
+    = f.button :submit, 'Guardar', class: 'btn btn-primary'
+    = link_to('Cancelar', sucursales_path, class: 'btn btn-light')

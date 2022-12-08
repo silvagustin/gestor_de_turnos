@@ -24,7 +24,10 @@
         %td= sucursal.telefono
 
         / Acciones
-        %td= link_to('Ver', sucursal, class: 'btn btn-primary')
+        - if current_user.cliente?
+          %td= link_to('Solicitar turno', [:new, sucursal, :turno], class: 'btn btn-primary')
+        - else
+          %td= link_to('Ver', sucursal, class: 'btn btn-primary')
 
         - if policy(:sucursal).edit?
           %td= link_to('Editar', [:edit, sucursal], class: 'btn btn-primary')

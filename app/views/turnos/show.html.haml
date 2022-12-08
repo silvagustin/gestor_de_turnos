@@ -1,0 +1,26 @@
+.row
+  .col-md-4
+    %h1 Mi turno
+
+  .col-md-2.offset-md-6
+    - if policy(@turno).edit?
+      = link_to('Editar turno', [:edit, @turno.sucursal, @turno], class: 'btn btn-success')
+
+%h3 Sucursal
+= @turno.sucursal.nombre
+
+%h3 Horario
+= @turno.horario
+
+%h3 Motivo
+= @turno.motivo
+
+%h3 Estado
+= @turno.estado
+
+- if @turno.atendido?
+  %h3 Atendido por
+  = @turno.personal_bancario.email
+
+  %h3 Respuesta
+  = @turno.respuesta

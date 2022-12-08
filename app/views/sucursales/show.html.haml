@@ -1,4 +1,13 @@
-%h1= "Sucursal ##{@sucursal.id}"
+.row
+  .col-md-4
+    %h1 Sucursal
+
+  .col-md-2.offset-md-6
+    - if policy(@sucursal).edit?
+      = link_to('Editar sucursal', [:edit, @sucursal], class: 'btn btn-success')
+
+    - if policy(Turno).new?
+      = link_to('Solicitar turno', [:new, @sucursal, :turno], class: 'btn btn-primary')
 
 %h3 Nombre
 = @sucursal.nombre

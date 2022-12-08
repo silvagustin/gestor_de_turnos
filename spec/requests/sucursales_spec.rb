@@ -78,9 +78,8 @@ RSpec.describe 'Sucursales', type: :request do
     describe 'GET /index' do
       before { get(sucursales_url) }
 
-      it 'should NOT render index page' do
-        expect(flash[:alert]).to eq('No tiene suficientes permisos para realizar esta operacion.')
-        expect(response).to redirect_to(edit_user_url(@cliente_user))
+      it 'should render index page' do
+        expect(response).to be_successful
       end
     end
 

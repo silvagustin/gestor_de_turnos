@@ -1,0 +1,31 @@
+%h1 Turnos
+
+- if @turnos.any?
+  %table.table.table-striped
+    %thead
+      %tr
+        %th #
+        %th Sucursal
+        %th Estado
+        %th{colspan: 3}
+
+    %tbody
+      - for turno in @turnos
+        %tr
+          %td= turno.id
+          %td= turno.sucursal.nombre
+          %td= turno.estado
+
+          / Acciones
+          %td= link_to('Ver', turno, class: 'btn btn-primary')
+
+          - if policy(turno).edit?
+            %td= link_to('Atender', [:edit, turno.sucursal, turno], class: 'btn btn-success')
+
+          - if policy(turno).destroy?
+            %td= link_to('Cancelar', turno, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Estas seguro de querer cancelar el turno?' })
+
+- else
+  %div.card
+    %div.card-body
+      %p.card-text No se encontraron turnos solicitados.

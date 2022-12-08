@@ -1,6 +1,16 @@
 class SucursalPolicy < ApplicationPolicy
+  class Scope < Scope
+    def resolve
+      case @user.rol
+        when 'administrador'     then Sucursal.all
+        when 'personal_bancario' then @user.sucursal
+        else                          Sucursal.none
+      end
+    end
+  end
+
   def index?
-    @user.administrador? || @user.personal_bancario?
+    true
   end
 
   def show?
