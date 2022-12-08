@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'support/session'
 
 RSpec.describe 'Horarios', type: :request do
-  let!(:sucursal) { create(:sucursal) }
+  let!(:sucursal) { create(:sucursal, :con_horarios) }
   let!(:horario)  { sucursal.horarios.sample }
 
   context 'as a NON-logged user' do
