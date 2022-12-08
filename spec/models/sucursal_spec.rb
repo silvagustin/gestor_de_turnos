@@ -77,14 +77,4 @@ RSpec.describe Sucursal, type: :model do
 
   end
 
-  context 'callbacks' do
-    describe '#after_create' do
-      it 'should have horarios' do
-        expect(sucursal_1.horarios).not_to be_empty
-      end
-
-    end
-
-  end
-
 end
