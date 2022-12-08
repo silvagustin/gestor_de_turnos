@@ -12,6 +12,10 @@
         - if user_signed_in? && policy(:user).index?
           = link_to('Usuarios', users_path, class: 'nav-link')
 
+      %li.nav-item
+        - if user_signed_in? && policy(:turno).index?
+          = link_to('Turnos', turnos_path, class: 'nav-link')
+
     - if user_signed_in?
       %ul.navbar-nav.ms-auto
         %li.nav-item

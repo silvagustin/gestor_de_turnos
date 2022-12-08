@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_06_212345) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_08_143404) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,6 +34,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_212345) do
     t.index ["nombre"], name: "index_sucursales_on_nombre", unique: true
   end
 
+  create_table "turnos", force: :cascade do |t|
+    t.bigint "cliente_id", null: false
+    t.bigint "sucursal_id", null: false
+    t.bigint "personal_bancario_id"
+    t.text "motivo", null: false
+    t.text "respuesta"
+    t.integer "estado", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cliente_id"], name: "index_turnos_on_cliente_id"
+    t.index ["personal_bancario_id"], name: "index_turnos_on_personal_bancario_id"
+    t.index ["sucursal_id"], name: "index_turnos_on_sucursal_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -49,4 +63,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_212345) do
     t.index ["sucursal_id"], name: "index_users_on_sucursal_id"
   end
 
+  add_foreign_key "turnos", "users", column: "cliente_id"
+  add_foreign_key "turnos", "users", column: "personal_bancario_id"
 end

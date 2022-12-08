@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   resources :sucursales do
     resources :horarios, only: %i( edit update )
   end
+
+  resources :turnos
 end

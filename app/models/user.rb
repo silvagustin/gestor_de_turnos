@@ -2,6 +2,9 @@ class User < ApplicationRecord
   # Associations
   belongs_to :sucursal, optional: true
 
+  has_many :turnos, foreign_key: 'cliente_id'
+  has_many :sucursales, through: :turnos
+
   # Include default devise modules
   devise :database_authenticatable,
          :registerable,

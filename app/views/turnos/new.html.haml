@@ -1,0 +1,13 @@
+%h1 Nuevo turno
+
+= simple_form_for(@turno) do |f|
+  .form-inputs
+    = f.association :sucursal, collection: sucursales_seleccionables(), |
+                               required: true, |
+                               prompt: 'Seleccione una sucursal'
+
+    = f.input :motivo, required: true
+
+  .form-actions.my-3
+    = f.button :submit, 'Guardar', class: 'btn btn-primary'
+    = link_to('Cancelar', turnos_path, class: 'btn btn-light')
