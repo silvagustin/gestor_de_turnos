@@ -14,7 +14,11 @@
         %tr
           %td= turno.id
           %td= turno.sucursal.nombre
-          %td= turno.estado
+          %td
+            - if turno.pendiente?
+              %span.badge.bg-warning= turno.estado
+            - else
+              %span.badge.bg-success= turno.estado
 
           / Acciones
           %td= link_to('Ver', turno, class: 'btn btn-primary')

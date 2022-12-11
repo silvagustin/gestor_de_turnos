@@ -6,31 +6,37 @@
     - if policy(:sucursal).new?
       = link_to('Nueva sucursal', [:new, :sucursal], class: 'btn btn-success')
 
-%table.table.table-striped
-  %thead
-    %tr
-      %th #
-      %th Nombre
-      %th Dirección
-      %th Teléfono
-      %th{colspan: 3}
-
-  %tbody
-    - for sucursal in @sucursales
+- if @sucursales.any?
+  %table.table.table-striped
+    %thead
       %tr
-        %td= sucursal.id
-        %td= sucursal.nombre
-        %td= sucursal.direccion
-        %td= sucursal.telefono
+        %th #
+        %th Nombre
+        %th Dirección
+        %th Teléfono
+        %th{colspan: 3}
 
-        / Acciones
-        - if current_user.cliente?
-          %td= link_to('Solicitar turno', [:new, sucursal, :turno], class: 'btn btn-primary')
-        - else
-          %td= link_to('Ver', sucursal, class: 'btn btn-primary')
+    %tbody
+      - for sucursal in @sucursales
+        %tr
+          %td= sucursal.id
+          %td= sucursal.nombre
+          %td= sucursal.direccion
+          %td= sucursal.telefono
 
-        - if policy(:sucursal).edit?
-          %td= link_to('Editar', [:edit, sucursal], class: 'btn btn-primary')
+          / Acciones
+          - if current_user.cliente?
+            %td= link_to('Solicitar turno', [:new, sucursal, :turno], class: 'btn btn-primary')
+          - else
+            %td= link_to('Ver', sucursal, class: 'btn btn-primary')
 
-        - if policy(:sucursal).destroy?
-          %td= link_to('Eliminar', sucursal, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: "Estas seguro de querer eliminar la sucursal '#{sucursal.nombre}'?" })
+          - if policy(:sucursal).edit?
+            %td= link_to('Editar', [:edit, sucursal], class: 'btn btn-primary')
+
+          - if policy(:sucursal).destroy?
+            %td= link_to('Eliminar', sucursal, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: "Estas seguro de querer eliminar la sucursal '#{sucursal.nombre}'?" })
+
+- else
+  %div.card
+    %div.card-body
+      %p.card-text No se encontraron sucursales.
