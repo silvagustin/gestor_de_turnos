@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
   devise_for :users,
     path: '',
     path_names: {
@@ -9,6 +7,16 @@ Rails.application.routes.draw do
       sign_up: 'register'
     },
     skip: [:passwords]
+
+  devise_scope :user do
+    authenticated do
+      root to: 'sucursales#index', as: :authenticated_root
+    end
+
+    unauthenticated do
+      root to: 'devise/sessions#new', as: :unauthenticated_root
+    end
+  end
 
   resources :users
 
