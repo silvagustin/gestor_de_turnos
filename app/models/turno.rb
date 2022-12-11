@@ -24,6 +24,9 @@ class Turno < ApplicationRecord
   # Estados
   enum :estado, { pendiente: 0, atendido: 1 }
 
+  # Scopes
+  scope :pendientes, -> { where(estado: :pendiente) }
+
   private
 
   def horario_valido?

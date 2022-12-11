@@ -38,7 +38,7 @@ class SucursalesController < ApplicationController
     if @sucursal.destroy
       redirect_to sucursales_path, notice: 'Sucursal eliminada.'
     else
-      redirect_to sucursales_path, alert: 'No se pudo eliminar la sucursal.'
+      redirect_to sucursales_path, alert: 'No se pudo eliminar la sucursal. Verifica que no tenga turnos pendientes'
     end
   end
 

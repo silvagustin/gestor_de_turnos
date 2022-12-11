@@ -16,10 +16,6 @@ class TurnosController < ApplicationController
 
   def create
     @turno = @sucursal.turnos.build(turno_params)
-  end
-
-  def create
-    @turno = current_user.turnos.build(turno_params)
 
     if @turno.save
       redirect_to @turno, notice: 'Turno creado.'

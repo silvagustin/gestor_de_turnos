@@ -5,6 +5,7 @@ def crear_sucursales_con_horarios
   10.times do
     sucursal = FactoryBot.create(:sucursal)
     Horario.crear_horarios(sucursal_id: sucursal.id)
+    sucursal.horarios.update_all(habilitado: true)
   end
 end
 
