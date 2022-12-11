@@ -1,27 +1,27 @@
 %h1= "Solicitar turno para sucursal '#{@sucursal.nombre}'"
 
-%h3 Dirección
+%h3.my-3 Dirección
 = @sucursal.direccion
 
-%h3 Teléfono
+%h3.my-3 Teléfono
 = @sucursal.telefono
 
-%h3 Horarios
+%h3.my-3 Horarios
 %table.table.table-striped
   %thead
     %tr
-      %th Habilitado?
       %th Dia
       %th Hora inicial
       %th Hora final
 
   %tbody
-    - for horario in @sucursal.horarios
+    - for horario in @sucursal.horarios.habilitados
       %tr
-        %td= horario.habilitado ? 'Si' : 'No'
-        %td= horario.dia
+        %td= horario.dia.capitalize
         %td= horario.hora_inicial
         %td= horario.hora_final
+
+%h3.my-3 Turno
 
 = simple_form_for(@turno, url: [@sucursal, @turno], method: :post) do |f|
   .form-inputs
