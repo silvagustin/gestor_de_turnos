@@ -4,20 +4,26 @@
 
   .col-md-2.offset-md-6
     - if policy(@turno).edit?
-      = link_to('Editar turno', [:edit, @turno], class: 'btn btn-success')
+      = link_to('Editar turno', [:edit, @turno.sucursal, @turno], class: 'btn btn-success')
 
-%h3 Sucursal
+%h3.my-3 Sucursal
 = @turno.sucursal.nombre
 
-%h3 Motivo
+%h3.my-3 Horario
+= @turno.horario
+
+%h3.my-3 Motivo
 = @turno.motivo
 
-%h3 Estado
-= @turno.estado
+%h3.my-3 Estado
+- if @turno.pendiente?
+  %span.badge.bg-warning= @turno.estado
+- else
+  %span.badge.bg-success= @turno.estado
 
 - if @turno.atendido?
-  %h3 Atendido por
+  %h3.my-3 Atendido por
   = @turno.personal_bancario.email
 
-  %h3 Respuesta
+  %h3.my-3 Respuesta
   = @turno.respuesta

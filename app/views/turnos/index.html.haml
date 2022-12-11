@@ -1,31 +1,35 @@
-.row
-  .col-md-4
-    %h1 Turnos
+%h1 Turnos
 
-  .col-md-2.offset-md-6
-    - if policy(:turno).new?
-      = link_to('Nuevo turno', [:new, :turno], class: 'btn btn-success')
-
-%table.table.table-striped
-  %thead
-    %tr
-      %th #
-      %th Sucursal
-      %th Estado
-      %th{colspan: 3}
-
-  %tbody
-    - for turno in @turnos
+- if @turnos.any?
+  %table.table.table-striped
+    %thead
       %tr
-        %td= turno.id
-        %td= turno.sucursal.nombre
-        %td= turno.estado
+        %th #
+        %th Sucursal
+        %th Estado
+        %th{colspan: 3}
 
-        / Acciones
-        %td= link_to('Ver', turno, class: 'btn btn-primary')
+    %tbody
+      - for turno in @turnos
+        %tr
+          %td= turno.id
+          %td= turno.sucursal.nombre
+          %td
+            - if turno.pendiente?
+              %span.badge.bg-warning= turno.estado
+            - else
+              %span.badge.bg-success= turno.estado
 
-        - if policy(turno).edit?
-          %td= link_to('Atender', [:edit, turno], class: 'btn btn-success')
+          / Acciones
+          %td= link_to('Ver', turno, class: 'btn btn-primary')
 
-        - if policy(turno).destroy?
-          %td= link_to('Cancelar', turno, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Estas seguro de querer cancelar el turno?' })
+          - if policy(turno).edit?
+            %td= link_to('Atender', [:edit, turno.sucursal, turno], class: 'btn btn-success')
+
+          - if policy(turno).destroy?
+            %td= link_to('Cancelar', turno, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Estas seguro de querer cancelar el turno?' })
+
+- else
+  %div.card
+    %div.card-body
+      %p.card-text No se encontraron turnos solicitados.

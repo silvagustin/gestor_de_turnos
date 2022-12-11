@@ -1,20 +1,29 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
   devise_for :users,
     path: '',
     path_names: {
       sign_in: 'login',
       sign_out: 'logout',
-      sign_up: 'register'
+      sign_up: 'registro'
     },
     skip: [:passwords]
+
+  devise_scope :user do
+    authenticated do
+      root to: 'sucursales#index', as: :authenticated_root
+    end
+
+    unauthenticated do
+      root to: 'devise/sessions#new', as: :unauthenticated_root
+    end
+  end
 
   resources :users
 
   resources :sucursales do
     resources :horarios, only: %i( edit update )
+    resources :turnos, except: %i( index show destroy )
   end
 
-  resources :turnos
+  resources :turnos, only: %i( index show destroy )
 end

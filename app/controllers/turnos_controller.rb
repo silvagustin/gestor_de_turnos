@@ -1,5 +1,6 @@
 class TurnosController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_sucursal, only: %i( new create edit update )
   before_action :set_turno, only: %i( show edit update destroy )
   before_action -> { authorize_user!(@turno || Turno) }
 
@@ -10,7 +11,11 @@ class TurnosController < ApplicationController
   def show; end
 
   def new
-    @turno = Turno.new
+    @turno = @sucursal.turnos.build
+  end
+
+  def create
+    @turno = @sucursal.turnos.build(turno_params)
   end
 
   def create
@@ -19,8 +24,8 @@ class TurnosController < ApplicationController
     if @turno.save
       redirect_to @turno, notice: 'Turno creado.'
     else
-      flash.now[:alert] = 'No se pudo crear el turno'.
-      render :new, status: :unprocessable_entity
+      # flash.now[:alert] = 'No se pudo crear el turno'.
+      render template: "turnos/new", status: :unprocessable_entity
     end
   end
 
@@ -47,12 +52,16 @@ class TurnosController < ApplicationController
 
   def turno_params
     case action_name
-    when 'create' then params.require(:turno).permit(:sucursal_id, :motivo)
+    when 'create' then params.require(:turno).permit(:horario, :motivo).merge(cliente_id: current_user.id)
     when 'update' then params.require(:turno).permit(:respuesta).merge(estado: :atendido, personal_bancario_id: current_user.id)
     end
   end
 
   def set_turno
     @turno = policy_scope(Turno).find(params[:id])
+  end
+
+  def set_sucursal
+    @sucursal = Sucursal.find(params[:sucursal_id])
   end
 end

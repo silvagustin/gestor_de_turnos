@@ -39,6 +39,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_08_143404) do
     t.bigint "sucursal_id", null: false
     t.bigint "personal_bancario_id"
     t.text "motivo", null: false
+    t.datetime "horario", null: false
     t.text "respuesta"
     t.integer "estado", default: 0, null: false
     t.datetime "created_at", null: false

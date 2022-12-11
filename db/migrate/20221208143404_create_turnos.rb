@@ -6,7 +6,11 @@ class CreateTurnos < ActiveRecord::Migration[7.0]
 
       t.belongs_to :personal_bancario, foreign_key: { to_table: 'users' }
 
+      # Campos para Cliente
       t.text :motivo, null: false
+      t.datetime :horario, null: false
+
+      # Campos para Personal bancario
       t.text :respuesta
       t.integer :estado, null: false, default: 0
 

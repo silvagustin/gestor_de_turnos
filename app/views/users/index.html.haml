@@ -6,28 +6,34 @@
     - if policy(:user).new?
       = link_to('Nuevo usuario', [:new, :user], class: 'btn btn-success')
 
-%table.table.table-striped
-  %thead
-    %tr
-      %th #
-      %th Email
-      %th Rol
-      %th Fecha de registro
-      %th{colspan: 3}
-
-  %tbody
-    - for user in @users
+- if @users.any?
+  %table.table.table-striped
+    %thead
       %tr
-        %td= user.id
-        %td= user.email
-        %td= user.rol
-        %td= fecha_y_hora(user.created_at)
+        %th #
+        %th Email
+        %th Rol
+        %th Fecha de registro
+        %th{colspan: 3}
 
-        / Acciones
-        %td= link_to('Ver', user, class: 'btn btn-primary')
+    %tbody
+      - for user in @users
+        %tr
+          %td= user.id
+          %td= user.email
+          %td= user.rol
+          %td= fecha_y_hora(user.created_at)
 
-        - if policy(user).edit?
-          %td= link_to('Editar', [:edit, user], class: 'btn btn-primary')
+          / Acciones
+          %td= link_to('Ver', user, class: 'btn btn-primary')
 
-        - if policy(user).destroy?
-          %td= link_to('Eliminar', user, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: "Estas seguro de querer eliminar al usuario '#{user.email}'?" })
+          - if policy(user).edit?
+            %td= link_to('Editar', [:edit, user], class: 'btn btn-primary')
+
+          - if policy(user).destroy?
+            %td= link_to('Eliminar', user, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: "Estas seguro de querer eliminar al usuario '#{user.email}'?" })
+
+- else
+  %div.card
+    %div.card-body
+      %p.card-text No se encontraron usuarios.
