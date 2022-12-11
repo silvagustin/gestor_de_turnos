@@ -1,15 +1,6 @@
 require 'rails_helper'
 require 'support/session'
 
-# TODOs:
-# - Revisar specs:
-  # - [] non-logged user
-  # - [] cliente user
-  # - [] personal_bancario user
-  # - [] administrador user
-
-# - En el controller, tener en cuenta que el edit esta aceptando el email como parametro... habria que cambiar los tests de update de administrador user. Saaaalvo que permitamos esto solo para administradores
-
 RSpec.describe 'Users', type: :request do
   let!(:cliente_user)           { create(:user) }
   let!(:administrador_user)     { create(:user, :administrador) }
