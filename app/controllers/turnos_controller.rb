@@ -54,10 +54,20 @@ class TurnosController < ApplicationController
   end
 
   def set_turno
-    @turno = policy_scope(Turno).find(params[:id])
+    @turno =
+      begin
+        policy_scope(Turno).find(params[:id])
+      rescue
+        user_not_authorized
+      end
   end
 
   def set_sucursal
-    @sucursal = Sucursal.find(params[:sucursal_id])
+    @sucursal =
+      begin
+        Sucursal.find(params[:sucursal_id])
+      rescue
+        user_not_authorized
+      end
   end
 end
