@@ -7,29 +7,35 @@
 = @sucursal.telefono
 
 %h3.my-3 Horarios
-%table.table.table-striped
-  %thead
-    %tr
-      %th Dia
-      %th Hora inicial
-      %th Hora final
-
-  %tbody
-    - for horario in @sucursal.horarios.habilitados
+- if @sucursal.horarios.habilitados.any?
+  %table.table.table-striped
+    %thead
       %tr
-        %td= horario.dia.capitalize
-        %td= horario.hora_inicial
-        %td= horario.hora_final
+        %th Dia
+        %th Hora inicial
+        %th Hora final
 
-%h3.my-3 Turno
+    %tbody
+      - for horario in @sucursal.horarios.habilitados
+        %tr
+          %td= horario.dia.capitalize
+          %td= horario.hora_inicial
+          %td= horario.hora_final
 
-= simple_form_for(@turno, url: [@sucursal, @turno], method: :post) do |f|
-  .form-inputs
-    =# f.input :horario, html5: true, input_html: { min: "12:00:00", max: "15:00:00", step: "10800" }
-    = f.input :horario, html5: true
+  %h3.my-3 Turno
 
-    = f.input :motivo, required: true, input_html: { cols: 5, rows: 10 }
+  = simple_form_for(@turno, url: [@sucursal, @turno], method: :post) do |f|
+    .form-inputs
+      =# f.input :horario, html5: true, input_html: { min: "12:00:00", max: "15:00:00", step: "10800" }
+      = f.input :horario, html5: true
 
-  .form-actions.my-3
-    = f.button :submit, 'Guardar', class: 'btn btn-primary'
-    = link_to('Cancelar', sucursales_path, class: 'btn btn-light')
+      = f.input :motivo, required: true, input_html: { cols: 5, rows: 10 }
+
+    .form-actions.my-3
+      = f.button :submit, 'Guardar', class: 'btn btn-primary'
+      = link_to('Cancelar', sucursales_path, class: 'btn btn-light')
+
+- else
+  %div.card
+    %div.card-body
+      %p.card-text No se puede reservar un turno debido a que la sucursal no cuenta con horarios habilitados.
