@@ -19,6 +19,9 @@ class Horario < ApplicationRecord
 
   validate :hora_inicial_es_menor_que_hora_final
 
+  # Scopes
+  scope :habilitados, -> { where(habilitado: true) }
+
   def self.crear_horarios(sucursal_id:)
     begin
       sucursal_id = Integer(sucursal_id)

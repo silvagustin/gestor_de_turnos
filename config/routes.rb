@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :sucursales do
     resources :horarios, only: %i( edit update )
-    resources :turnos, except: %i( index )
+    resources :turnos, except: %i( index show destroy )
   end
 
   resources :turnos, only: %i( index show destroy )

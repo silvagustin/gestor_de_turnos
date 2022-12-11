@@ -20,8 +20,8 @@ class TurnosController < ApplicationController
     if @turno.save
       redirect_to @turno, notice: 'Turno creado.'
     else
-      flash.now[:alert] = 'No se pudo crear el turno'.
-      render :new, status: :unprocessable_entity
+      # flash.now[:alert] = 'No se pudo crear el turno'.
+      render template: "turnos/new", status: :unprocessable_entity
     end
   end
 
