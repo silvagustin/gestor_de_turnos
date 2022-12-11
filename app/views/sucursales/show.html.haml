@@ -9,16 +9,16 @@
     - if policy(Turno).new?
       = link_to('Solicitar turno', [:new, @sucursal, :turno], class: 'btn btn-primary')
 
-%h3 Nombre
+%h3.my-3 Nombre
 = @sucursal.nombre
 
-%h3 Dirección
+%h3.my-3 Dirección
 = @sucursal.direccion
 
-%h3 Teléfono
+%h3.my-3 Teléfono
 = @sucursal.telefono
 
-%h3 Horarios
+%h3.my-3 Horarios
 %table.table.table-striped
   %thead
     %tr

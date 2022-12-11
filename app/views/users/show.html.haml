@@ -6,10 +6,10 @@
     - if policy(@user).edit?
       = link_to('Editar usuario', [:edit, @user], class: 'btn btn-success')
 
-%h3 Email
+%h3.my-3 Email
 %p= current_user.email
 
-%h3 Rol
+%h3.my-3 Rol
 %p= current_user.rol
 
 - if @user.id == current_user.id
