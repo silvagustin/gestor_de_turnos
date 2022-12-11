@@ -5,11 +5,8 @@ class User < ApplicationRecord
   has_many :turnos, foreign_key: 'cliente_id'
   has_many :sucursales, through: :turnos
 
-  # Include default devise modules
-  devise :database_authenticatable,
-         :registerable,
-         :rememberable,
-         :validatable
+  # Modulos de Devise
+  devise :database_authenticatable, :registerable, :validatable
 
   # Roles
   enum :rol, { cliente: 0, personal_bancario: 1, administrador: 2 }, scopes: false

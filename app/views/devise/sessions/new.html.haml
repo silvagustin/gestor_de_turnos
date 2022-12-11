@@ -11,8 +11,6 @@
       required: false,                                 |
       input_html: { autocomplete: "current-password", class: "my-3" }
 
-    = f.input :remember_me, as: :boolean, label: 'Recuérdame' if devise_mapping.rememberable?
-
   .form-actions.my-3
     = f.button :submit, 'Iniciar sesión', class: 'btn btn-primary'
 
