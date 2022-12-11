@@ -1,22 +1,12 @@
 require 'rails_helper'
 
-# TODOs:
-# - [] Luego de revisar users_spec.rb, revisar estos:
-  # - [] non-logged user
-  # - [] cliente user
-  # - [] personal_bancario user
-  # - [] administrador user
-
-  # PD: user_specs estan mas completos
-
 RSpec.describe Sucursal, type: :model do
-  let!(:sucursal_1) { create(:sucursal) }
-
   context 'validations' do
-    describe 'nombre uniqueness' do
-      let(:sucursal_2) { build(:sucursal) }
-      let(:sucursal_3) { build(:sucursal, nombre: sucursal_1.nombre) }
+    let!(:sucursal_1) { create(:sucursal) }
+    let(:sucursal_2)  { build(:sucursal) }
+    let(:sucursal_3)  { build(:sucursal, nombre: sucursal_1.nombre) }
 
+    describe 'nombre uniqueness' do
       it 'should be valid' do
         expect(sucursal_2).to be_valid
       end
@@ -72,6 +62,26 @@ RSpec.describe Sucursal, type: :model do
 
         sucursal.telefono = ''
         expect(sucursal).not_to be_valid
+      end
+    end
+
+  end
+
+  context 'callbacks' do
+    let(:turno)    { create(:turno) }
+    let(:sucursal) { turno.sucursal }
+
+    describe 'puede_eliminarse?' do
+      it 'should be valid when there are no turnos pendientes' do
+        personal_bancario = create(:user, :personal_bancario, sucursal_id: sucursal.id)
+        turno.update(respuesta: Faker::Lorem.sentence, personal_bancario_id: personal_bancario.id, estado: :atendido)
+
+        expect(sucursal.destroy).to be_valid
+      end
+
+      it 'should NOT be valid when there are turnos pendientes' do
+        expect(sucursal.destroy).to eq(false)
+        expect(sucursal.errors.full_messages).to include('No se puede eliminar la sucursal porque tiene turnos pendientes')
       end
     end
 

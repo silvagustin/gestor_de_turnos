@@ -20,4 +20,5 @@ class Sucursal < ApplicationRecord
       throw :abort
     end
   end
+
 end

@@ -30,25 +30,55 @@ class Turno < ApplicationRecord
   private
 
   def horario_valido?
-    horarios_habilitados = sucursal.horarios.habilitados
+    if horarios_habilitados = verificar_sucursal_horarios_habilitados
+      dia = DIAS[self.horario&.wday]
 
-    if horarios_habilitados.any?
-      dias_habilitados = horarios_habilitados.collect(&:dia)
-      dia = DIAS[self.horario.wday]
+      es_valido = verificar_dia_incluido_en_horarios_habilitados(dia, horarios_habilitados)
+      return unless es_valido
 
-      if dias_habilitados.include?(dia)
-        horario_sucursal = horarios_habilitados.find_by(dia: dia)
-      else
-        errors.add(:horario, "no se encuentra dentro de los horarios habilitados")
-        return
-      end
+      es_valido = verificar_si_fecha_esta_en_el_pasado
+      return unless es_valido
 
-      if !((horario_sucursal.hora_inicial..horario_sucursal.hora_final).include?(self.horario.hour)) || (self.horario.hour == horario_sucursal.hora_final && self.horario.min > 0)
-        errors.add(:horario, "no se encuentra dentro de los horarios habilitados")
-      end
-    else
-      errors.add(:horario, "no se encuentra dentro de los horarios habilitados")
+      horario_sucursal = horarios_habilitados.find_by(dia: dia)
+      es_valido = verificar_hora(horario_sucursal)
+      return unless es_valido
+
+      es_valido = verificar_minutos(horario_sucursal)
     end
+  end
+
+  def verificar_sucursal_horarios_habilitados
+    horarios_habilitados = sucursal&.horarios&.habilitados
+
+    return horarios_habilitados if horarios_habilitados&.any?
+    errors.add(:base, "la sucursal no tiene horarios habilitados")
+    false
+  end
+
+  def verificar_dia_incluido_en_horarios_habilitados(dia, horarios_habilitados)
+    dias_habilitados = horarios_habilitados.collect(&:dia)
+
+    return true if dias_habilitados.include?(dia)
+    errors.add(:horario, "no se encuentra dentro de los horarios habilitados")
+    false
+  end
+
+  def verificar_si_fecha_esta_en_el_pasado
+    return true if horario > Time.now
+    errors.add(:horario, 'no puede ser una fecha del pasado')
+    false
+  end
+
+  def verificar_hora(horario_sucursal)
+    return true if (horario_sucursal.hora_inicial..horario_sucursal.hora_final).include?(horario.hour)
+    errors.add(:horario, "no se encuentra dentro de los horarios habilitados")
+    false
+  end
+
+  def verificar_minutos(horario_sucursal)
+    return true if !(horario.hour == horario_sucursal.hora_final && horario.min > 0)
+    errors.add(:horario, "no se encuentra dentro de los horarios habilitados")
+    false
   end
 
 end

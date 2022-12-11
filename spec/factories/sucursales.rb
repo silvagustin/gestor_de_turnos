@@ -16,6 +16,7 @@ FactoryBot.define do
         sucursal.horarios.update_all(habilitado: true)
       end
     end
+
   end
 
 end

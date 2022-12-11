@@ -15,7 +15,6 @@ RSpec.describe Horario, type: :model do
         expect(horario).not_to be_valid
         expect(horario.errors.messages).to include(sucursal: ['must exist'])
       end
-
     end
 
   end
@@ -23,7 +22,20 @@ RSpec.describe Horario, type: :model do
   context 'validations' do
     let(:horario) { build(:horario) }
 
-    describe 'numericality' do
+    describe 'habilitado inclusion' do
+      it 'should be valid' do
+        expect(horario).to be_valid
+      end
+
+      it 'should NOT be valid' do
+        horario = build(:horario, habilitado: nil)
+
+        expect(horario).not_to be_valid
+        expect(horario.errors.messages).to include(habilitado: ['is not included in the list'])
+      end
+    end
+
+    describe 'hora_inicial, hora_final numericality' do
       it 'should be valid' do
         expect(horario).to be_valid
       end
@@ -55,7 +67,6 @@ RSpec.describe Horario, type: :model do
         expect(horario).not_to be_valid
         expect(horario.errors.messages).to include(hora_inicial: ['must be an integer'], hora_final: ['must be an integer'])
       end
-
     end
 
     describe 'hora_inicial_es_menor_que_hora_final' do
@@ -72,7 +83,6 @@ RSpec.describe Horario, type: :model do
         expect(horario).not_to be_valid
         expect(horario.errors.messages).to include(hora_inicial: ["'hora_inicial' debe ser MENOR a 'hora_final'"])
       end
-
     end
 
     describe 'inclusion' do
@@ -89,7 +99,16 @@ RSpec.describe Horario, type: :model do
         expect(horario_1).not_to be_valid
         expect(horario_2).not_to be_valid
       end
+    end
 
+  end
+
+  context 'scopes' do
+    describe 'habilitados' do
+      it 'should NOT return horarios not habilitados' do
+        horario = create(:horario, habilitado: false)
+        expect(Horario.habilitados).not_to include(horario)
+      end
     end
 
   end
@@ -111,7 +130,6 @@ RSpec.describe Horario, type: :model do
         expect(Horario.crear_horarios(sucursal_id: sucursal_id_1)).to eq("'sucursal_id' debe ser un numero entero")
         expect(Horario.crear_horarios(sucursal_id: sucursal_id_2)).to eq("'sucursal_id' debe ser un numero entero")
       end
-
     end
 
   end

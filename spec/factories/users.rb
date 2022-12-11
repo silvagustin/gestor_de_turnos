@@ -10,7 +10,8 @@ FactoryBot.define do
     end
 
     trait :personal_bancario do
-      rol { :personal_bancario }
+      rol      { :personal_bancario }
+      sucursal { create(:sucursal) }
     end
 
   end

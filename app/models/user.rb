@@ -16,4 +16,5 @@ class User < ApplicationRecord
 
   # Scopes
   scope :clientes, ->() { where(rol: :cliente) }
+
 end

@@ -5,5 +5,7 @@ FactoryBot.define do
     habilitado  { true }
 
     sucursal { create(:sucursal) }
+
   end
+
 end
