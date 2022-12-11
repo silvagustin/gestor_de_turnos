@@ -3,9 +3,7 @@
 ###############################################################################
 def crear_sucursales_con_horarios
   10.times do
-    sucursal = FactoryBot.create(:sucursal)
-    Horario.crear_horarios(sucursal_id: sucursal.id)
-    sucursal.horarios.update_all(habilitado: true)
+    sucursal = FactoryBot.create(:sucursal, :con_horarios_habilitados)
   end
 end
 
@@ -35,6 +33,14 @@ def crear_usuarios
   crear_administradores
 end
 
+def crear_turnos_pendientes
+  User.clientes.each do |user|
+    Sucursal.all.each do |sucursal|
+      FactoryBot.create(:turno, cliente_id: user.id, sucursal_id: sucursal.id)
+    end
+  end
+end
+
 ###############################################################################
 # Main
 ###############################################################################
@@ -50,6 +56,9 @@ logger.info('--> Usuarios eliminados')
 Horario.destroy_all
 logger.info('--> Horarios eliminadas')
 
+Turno.destroy_all
+logger.info('--> Turnos eliminados')
+
 Sucursal.destroy_all
 logger.info('--> Sucursales eliminadas')
 
@@ -62,3 +71,6 @@ logger.info('--> Sucursales con horarios creadas')
 
 crear_usuarios
 logger.info('--> Usuarios creados')
+
+crear_turnos_pendientes
+logger.info('--> Turnos pendientes creados')
